@@ -3,7 +3,7 @@ html * {
 }
 body {
   height: 100vh;
-  background: linear-gradient(90deg, #beddc3 0%, #dfeafd 100%);
+  background: linear-gradient(90deg, #9bc1a1 0%, #dfeafd 100%);
 }
 .container {
   height: 100vh;
@@ -31,11 +31,15 @@ body {
   display: block;
   margin: 20px;
 }
+.foxImage img {
+  width: 50%;
+}
 .albumImage {
   grid-column: 2/3;
   display: block;
   justify-self: right;
   margin: 20px;
+  text-align-last: end;
 }
 .playlistsSide {
   display: grid;
@@ -43,7 +47,7 @@ body {
   margin: 20px;
 }
 .albumImage img {
-  width: 100px;
+  width: 60%;
 }
 .playlist {
   list-style: none;
@@ -119,13 +123,18 @@ audio::-webkit-media-controls-panel {
   justify-content: center;
   align-items: center;
 }
-.unactive:first-child {
-  display: none;
-}
-.active:nth-child(2) {
-  display: none;
-}
 audio {
   grid-column: 2/4;
   grid-row: 1/2;
+}
+
+#play .pause {
+  display: none;
+}
+
+#play.active .pause {
+  display: block;
+}
+#play.active .play {
+  display: none;
 }

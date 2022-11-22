@@ -1,15 +1,17 @@
 "use strict";
+
 //loadstart, play, ended, progress
 const playButton = document.getElementById("play");
 const media = document.querySelector("audio");
 const controlButtons = document.getElementsByClassName("controler");
 const pauseButton = document.getElementById("pause");
-playButton.addEventListener("click", (e) => {
+playButton.addEventListener("click", function () {
   if (!media.paused) {
     media.pause();
+    this.classList.remove("active");
   } else {
     media.play();
-    controlButtons.classList = "active";
+    this.classList.add("active");
   }
 });
 
