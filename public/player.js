@@ -93,12 +93,6 @@ const getSongsHandler = async () => {
   songs.forEach((song) => {
     createASong(song.title);
   });
-  songs.forEach((song) => {
-    createASong(song.title);
-  });
-  songs.forEach((song) => {
-    createASong(song.title);
-  });
 };
 getSongsHandler();
 

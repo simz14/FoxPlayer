@@ -68,19 +68,26 @@ body {
   background-color: rgb(234, 234, 234);
 }
 .allPlaylists {
-  height: auto;
+  height: 230px;
   overflow-x: hidden;
   overflow-y: auto;
   text-align: justify;
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }
-
+.allPlaylists a {
+  height: 35px;
+}
 .songsWrapper {
   height: 375px;
   overflow-x: hidden;
   overflow-y: auto;
   text-align: justify;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+}
+.songsWrapper a {
+  height: 35px;
 }
 .allPlaylists::-webkit-scrollbar,
 .songsWrapper::-webkit-scrollbar {
