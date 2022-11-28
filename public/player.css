@@ -61,7 +61,7 @@ body {
   grid-column: 2/3;
   margin: 20px;
 }
-#selectSong li:nth-child(even) {
+#selectSong a:nth-child(even) {
   background-color: rgb(234, 234, 234);
 }
 .playlist:nth-child(even) {
@@ -78,6 +78,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   text-align: justify;
+  display: grid;
 }
 .allPlaylists::-webkit-scrollbar,
 .songsWrapper::-webkit-scrollbar {
@@ -103,9 +104,7 @@ audio {
 audio::-webkit-media-controls-play-button {
   display: none;
 }
-audio::-webkit-media-controls-time-remaining-display {
-  display: none;
-}
+
 audio::-webkit-media-controls-panel {
   background-color: #c6e6cb;
 }
