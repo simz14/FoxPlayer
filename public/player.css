@@ -2,10 +2,17 @@ html * {
   box-sizing: border-box;
 }
 body {
+  background: linear-gradient(
+    31deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(4, 45, 11, 1) 44%,
+    rgba(0, 0, 0, 1) 100%
+  );
+
   height: 100vh;
-  background: linear-gradient(90deg, #9bc1a1 0%, #dfeafd 100%);
   counter-reset: section;
 }
+
 .container {
   height: 100vh;
   align-items: center;
@@ -14,7 +21,7 @@ body {
 }
 #app {
   width: 65%;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.426);
   border-radius: 10px;
   box-shadow: 0 0 20px #8fc397;
   display: grid;
@@ -62,12 +69,15 @@ body {
   grid-column: 2/3;
   margin: 20px;
 }
-#selectSong li:nth-child(even) {
-  background-color: rgb(234, 234, 234);
+#selectSong li {
+  background-color: rgba(0, 0, 0, 0.512);
+  border: 2px solid rgba(15, 49, 25, 0.719);
+  border-radius: 10px;
+  margin: 2px;
+  display: flex;
+  align-items: center;
 }
-.playlist:nth-child(even) {
-  background-color: rgb(234, 234, 234);
-}
+
 .allPlaylists {
   height: 230px;
   overflow-x: hidden;
@@ -78,6 +88,13 @@ body {
 }
 .allPlaylists li {
   height: 35px;
+  background-color: rgba(0, 0, 0, 0.512);
+  border: 2px solid rgba(15, 49, 25, 0.719);
+  border-radius: 10px;
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  color: white;
 }
 .songsWrapper {
   height: 375px;
@@ -92,11 +109,12 @@ body {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  color: white;
 }
 .songsWrapper li::before {
   counter-increment: section;
   content: counter(section);
-  position: absolute;
+  position: sticky;
 }
 .songTitle {
   margin-left: 20px;

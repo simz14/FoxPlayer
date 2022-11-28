@@ -105,8 +105,12 @@ const getSongsHandler = async () => {
 
   songs.forEach((song) => {
     const songElement = createASong(song.title, song.path, song.duration);
+    createASong(song.title, song.path, song.duration);
+    createASong(song.title, song.path, song.duration);
+    createASong(song.title, song.path, song.duration);
+    createASong(song.title, song.path, song.duration);
+    createASong(song.title, song.path, song.duration);
     //CREATING SONG PLAYING FUNCTIONALITY
-    console.log(songElement);
     songElement.addEventListener("click", (e) => {
       e.preventDefault();
       toPlay.src = songElement.dataset.path;
