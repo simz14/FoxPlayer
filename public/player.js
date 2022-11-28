@@ -1,4 +1,5 @@
 "use strict";
+const toPlay = document.querySelector("audio");
 const fakeSongsFetch = () => {
   const fakePromise = new Promise((res, rej) => {
     res([
@@ -8,7 +9,7 @@ const fakeSongsFetch = () => {
         title: "Spirirt Blossom",
         artist: "RomanBelov",
         duration: 1.48,
-        path: "public/music/spirit-blossom-15285.mp3",
+        path: "music/spirit-blossom-15285.mp3",
       },
       {
         id: 2,
@@ -16,7 +17,7 @@ const fakeSongsFetch = () => {
         title: "WatR-Fluid",
         artist: "ItsWatR",
         duration: 2.13,
-        path: "public/music/watr-fluid-10149.mp3",
+        path: "music/watr-fluid-10149.mp3",
       },
       {
         id: 3,
@@ -24,7 +25,7 @@ const fakeSongsFetch = () => {
         title: "Chillmore",
         artist: "The Weekend",
         duration: 2.25,
-        path: "public/music/he-weekend-117427.mp3",
+        path: "music/the-weekend-117427.mp3",
       },
       {
         id: 4,
@@ -32,7 +33,7 @@ const fakeSongsFetch = () => {
         title: "Sunset Vibes",
         artist: "Undefined",
         duration: 2.28,
-        path: "public/music/sunset-vibes-lo-fichillhop-9503.mp3",
+        path: "music/sunset-vibes-lo-fichillhop-9503.mp3",
       },
     ]);
     rej("Database error");
@@ -70,6 +71,7 @@ const getPlaylistHandler = async () => {
   const playlists = await fakePlaylistsFetch()
     .then((res) => res)
     .catch((err) => err);
+
   playlists.forEach((playlist) => {
     createAPlaylist(playlist.playlist);
   });
@@ -79,11 +81,14 @@ getPlaylistHandler();
 //CREATING HTML FOR SONGS LIST
 const songsWrapper = document.querySelector(".songsWrapper");
 
-const createASong = (title) => {
+const createASong = (title, path) => {
   const song = document.createElement("a");
   song.innerText = title;
   song.className = "song";
+  song.href = "#";
+  song.setAttribute("data-path", path);
   songsWrapper.appendChild(song);
+  return song;
 };
 const getSongsHandler = async () => {
   const songs = await fakeSongsFetch()
@@ -91,7 +96,13 @@ const getSongsHandler = async () => {
     .catch((err) => err);
 
   songs.forEach((song) => {
-    createASong(song.title);
+    const songElement = createASong(song.title, song.path);
+    //CREATING SONG PLAYING FUNCTIONALITY
+    console.log(songElement);
+    songElement.addEventListener("click", (e) => {
+      e.preventDefault();
+      toPlay.src = songElement.dataset.path;
+    });
   });
 };
 getSongsHandler();
