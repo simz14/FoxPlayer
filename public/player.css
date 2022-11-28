@@ -4,6 +4,7 @@ html * {
 body {
   height: 100vh;
   background: linear-gradient(90deg, #9bc1a1 0%, #dfeafd 100%);
+  counter-reset: section;
 }
 .container {
   height: 100vh;
@@ -61,7 +62,7 @@ body {
   grid-column: 2/3;
   margin: 20px;
 }
-#selectSong a:nth-child(even) {
+#selectSong li:nth-child(even) {
   background-color: rgb(234, 234, 234);
 }
 .playlist:nth-child(even) {
@@ -75,7 +76,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.allPlaylists a {
+.allPlaylists li {
   height: 35px;
 }
 .songsWrapper {
@@ -86,8 +87,19 @@ body {
   display: flex;
   flex-direction: column;
 }
-.songsWrapper a {
+.songsWrapper li {
   height: 35px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.songsWrapper li::before {
+  counter-increment: section;
+  content: counter(section);
+  position: absolute;
+}
+.songTitle {
+  margin-left: 20px;
 }
 .allPlaylists::-webkit-scrollbar,
 .songsWrapper::-webkit-scrollbar {

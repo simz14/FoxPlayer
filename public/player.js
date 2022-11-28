@@ -62,7 +62,7 @@ const fakePlaylistsFetch = () => {
 //CREATING HTML FOR PLAYLISTS
 const playlistsWrapper = document.querySelector(".allPlaylists");
 const createAPlaylist = (title) => {
-  const playlist = document.createElement("a");
+  const playlist = document.createElement("li");
   playlist.innerText = title;
   playlist.className = "playlist";
   playlistsWrapper.appendChild(playlist);
@@ -81,12 +81,20 @@ getPlaylistHandler();
 //CREATING HTML FOR SONGS LIST
 const songsWrapper = document.querySelector(".songsWrapper");
 
-const createASong = (title, path) => {
-  const song = document.createElement("a");
-  song.innerText = title;
+const createASong = (title, path, duration) => {
+  const song = document.createElement("li");
   song.className = "song";
-  song.href = "#";
   song.setAttribute("data-path", path);
+
+  const songTitle = document.createElement("div");
+  songTitle.className = "songTitle";
+  songTitle.innerText = title;
+  song.appendChild(songTitle);
+
+  const time = document.createElement("span");
+  time.className = "time";
+  time.innerText = duration;
+  song.appendChild(time);
   songsWrapper.appendChild(song);
   return song;
 };
@@ -96,7 +104,7 @@ const getSongsHandler = async () => {
     .catch((err) => err);
 
   songs.forEach((song) => {
-    const songElement = createASong(song.title, song.path);
+    const songElement = createASong(song.title, song.path, song.duration);
     //CREATING SONG PLAYING FUNCTIONALITY
     console.log(songElement);
     songElement.addEventListener("click", (e) => {
