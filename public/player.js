@@ -1,5 +1,5 @@
 "use strict";
-const fakeFetch = () => {
+const fakeSongsFetch = () => {
   const fakePromise = new Promise((res, rej) => {
     res([
       {
@@ -33,6 +33,25 @@ const fakeFetch = () => {
         artist: "Undefined",
         duration: 2.28,
         path: "public/music/sunset-vibes-lo-fichillhop-9503.mp3",
+      },
+    ]);
+    rej("Database error");
+  });
+  return fakePromise;
+};
+
+const fakePlaylistsFetch = () => {
+  const fakePromise = new Promise((res, rej) => {
+    res([
+      {
+        id: 1,
+        playlist: "favourite",
+        system_rank: 1,
+      },
+      {
+        id: 2,
+        playlist: "lofi",
+        system_rank: 0,
       },
     ]);
     rej("Database error");
