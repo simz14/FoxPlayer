@@ -58,32 +58,50 @@ const fakePlaylistsFetch = () => {
   });
   return fakePromise;
 };
+//CREATING HTML FOR PLAYLISTS
+const playlistsWrapper = document.querySelector(".allPlaylists");
+const createAPlaylist = (title) => {
+  const playlist = document.createElement("a");
+  playlist.innerText = title;
+  playlist.className = "playlist";
+  playlistsWrapper.appendChild(playlist);
+};
+const getPlaylistHandler = async () => {
+  const playlists = await fakePlaylistsFetch()
+    .then((res) => res)
+    .catch((err) => err);
+  playlists.forEach((playlist) => {
+    createAPlaylist(playlist.playlist);
+  });
+};
+getPlaylistHandler();
 
-//CREATING HTML FOR DONGS LIST
+//CREATING HTML FOR SONGS LIST
 const songsWrapper = document.querySelector(".songsWrapper");
 
-const createLi = (title) => {
+const createASong = (title) => {
   const song = document.createElement("a");
   song.innerText = title;
   song.className = "song";
   songsWrapper.appendChild(song);
 };
 const getSongsHandler = async () => {
-  const songs = await fakeFetch()
+  const songs = await fakeSongsFetch()
     .then((res) => res)
     .catch((err) => err);
 
   songs.forEach((song) => {
-    createLi(song.title);
+    createASong(song.title);
   });
   songs.forEach((song) => {
-    createLi(song.title);
+    createASong(song.title);
   });
   songs.forEach((song) => {
-    createLi(song.title);
+    createASong(song.title);
   });
 };
 getSongsHandler();
+
 //loadstart, play, ended, progress
 const playButton = document.getElementById("play");
 const media = document.querySelector("audio");

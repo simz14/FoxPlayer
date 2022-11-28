@@ -68,11 +68,13 @@ body {
   background-color: rgb(234, 234, 234);
 }
 .allPlaylists {
-  height: 230px;
+  height: auto;
   overflow-x: hidden;
   overflow-y: auto;
   text-align: justify;
+  display: grid;
 }
+
 .songsWrapper {
   height: 375px;
   overflow-x: hidden;
