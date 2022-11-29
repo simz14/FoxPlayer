@@ -46,12 +46,17 @@ const fakePlaylistsFetch = () => {
     res([
       {
         id: 1,
-        playlist: "favourite",
+        playlist: "Favourite",
         system_rank: 1,
       },
       {
         id: 2,
-        playlist: "lofi",
+        playlist: "All tracks",
+        system_rank: 1,
+      },
+      {
+        id: 3,
+        playlist: "Lofi",
         system_rank: 0,
       },
     ]);
@@ -59,13 +64,30 @@ const fakePlaylistsFetch = () => {
   });
   return fakePromise;
 };
+//CREATING ELEMENTS SONGS BY PLAYLIST ID
+const loopSongs = (songs, playlistId = 2) => {
+  const filteredSongs = songs.filter((song) => song.playlist_id === playlistId);
+
+  filteredSongs.forEach((song) => {
+    const songElement = createASong(song.title, song.path, song.duration);
+
+    //CREATING SONG PLAYING FUNCTIONALITY
+    songElement.addEventListener("click", (e) => {
+      e.preventDefault();
+      toPlay.src = songElement.dataset.path;
+    });
+  });
+};
+
 //CREATING HTML FOR PLAYLISTS
 const playlistsWrapper = document.querySelector(".allPlaylists");
-const createAPlaylist = (title) => {
+const createAPlaylist = (title, id) => {
   const playlist = document.createElement("li");
   playlist.innerText = title;
   playlist.className = "playlist";
+  playlist.setAttribute("data-id", id);
   playlistsWrapper.appendChild(playlist);
+  return playlist;
 };
 const getPlaylistHandler = async () => {
   const playlists = await fakePlaylistsFetch()
@@ -73,7 +95,12 @@ const getPlaylistHandler = async () => {
     .catch((err) => err);
 
   playlists.forEach((playlist) => {
-    createAPlaylist(playlist.playlist);
+    const playlistElement = createAPlaylist(playlist.playlist, playlist.id);
+    console.log(playlistElement);
+    playlistElement.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log(playlistElement.dataset.id);
+    });
   });
 };
 getPlaylistHandler();
@@ -98,24 +125,12 @@ const createASong = (title, path, duration) => {
   songsWrapper.appendChild(song);
   return song;
 };
+
 const getSongsHandler = async () => {
   const songs = await fakeSongsFetch()
     .then((res) => res)
     .catch((err) => err);
-
-  songs.forEach((song) => {
-    const songElement = createASong(song.title, song.path, song.duration);
-    createASong(song.title, song.path, song.duration);
-    createASong(song.title, song.path, song.duration);
-    createASong(song.title, song.path, song.duration);
-    createASong(song.title, song.path, song.duration);
-    createASong(song.title, song.path, song.duration);
-    //CREATING SONG PLAYING FUNCTIONALITY
-    songElement.addEventListener("click", (e) => {
-      e.preventDefault();
-      toPlay.src = songElement.dataset.path;
-    });
-  });
+  loopSongs(songs, 2);
 };
 getSongsHandler();
 
