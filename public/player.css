@@ -8,11 +8,11 @@ body {
     rgba(4, 45, 11, 1) 44%,
     rgba(0, 0, 0, 1) 100%
   );
-
   height: 100vh;
   counter-reset: section;
+  display: flex;
+  margin: 0;
 }
-
 .container {
   height: 100vh;
   align-items: center;
@@ -58,7 +58,23 @@ body {
 .addPlaylist{
   display: flex;
   justify-content: space-between;
-
+  align-items: center;
+}
+#modalAddPlaylist{
+  position: fixed;
+  background-color: #0000008d;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999;
+  display: flex;
+  display: none;
+}
+.modalWrapper{
+  max-width: 600px;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
 }
 .addPlaylist a{
   content: url("images/add-symbol-svgrepo-com.svg");

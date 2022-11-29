@@ -254,6 +254,20 @@ const main = async () => {
   };
   getPlaylistHandler();
 
+  /////////////////////////CREATE PLAYLIST
+  document.querySelector(".addPlaylist").innerHTML += "<a href=#></a>";
+  const addPlaylistBtn = document.querySelector(".addPlaylist>a");
+  addPlaylistBtn.addEventListener("click", (e) => {
+    document.querySelector("#modalAddPlaylist").style.display = "flex";
+  });
+
+  ///////////////////////GET INPUT TO CREATE PLAYLIST
+
+  const submitPlaylistBtn = document.querySelector("#addPlaylistBtn");
+  submitPlaylistBtn.addEventListener("click", (e) => {
+    console.log(document.getElementById("pname").value);
+    document.querySelector("#modalAddPlaylist").style.display = "none";
+  });
   //loadstart, play, ended, progress
   playButton.addEventListener("click", function () {
     if (!media.paused) {
