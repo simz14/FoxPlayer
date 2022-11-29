@@ -158,6 +158,7 @@ const main = async () => {
   };
   media.src = data[0].path;
   currentSong(data[0].title, data[0].artist);
+
   ///////////////////////////////CREATING HTML FOR SONGS LIST
   const songsWrapper = document.querySelector(".songsWrapper");
   const createASong = (title, path, duration) => {
@@ -210,17 +211,27 @@ const main = async () => {
       });
     }
   };
-
   loopSongs();
 
   /////////////////////////////////////CREATING HTML FOR PLAYLISTS
   const playlistsWrapper = document.querySelector(".allPlaylists");
-  const createAPlaylist = (title, id) => {
+  const createAPlaylist = (title, id, system_rank) => {
     const playlist = document.createElement("li");
     playlist.innerText = title;
     playlist.className = "playlist";
     playlist.setAttribute("data-id", id);
     playlistsWrapper.appendChild(playlist);
+
+    /////////////////DELETE PLAYLIST FUNCTIONALITY
+    if (system_rank !== 1) {
+      const removeTrack = document.createElement("a");
+      removeTrack.href = "#";
+      removeTrack.className = "removeIcon";
+      playlist.appendChild(removeTrack);
+      removeTrack.addEventListener("click", (e) => {
+        console.log(removeTrack.parentElement.dataset.id);
+      });
+    }
     return playlist;
   };
 
@@ -230,7 +241,11 @@ const main = async () => {
       .catch((err) => err);
 
     playlists.forEach((playlist) => {
-      const playlistElement = createAPlaylist(playlist.playlist, playlist.id);
+      const playlistElement = createAPlaylist(
+        playlist.playlist,
+        playlist.id,
+        playlist.system_rank
+      );
       playlistElement.addEventListener("click", (e) => {
         e.preventDefault();
         loopSongs(playlistElement.dataset.id);
