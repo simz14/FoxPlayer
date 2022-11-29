@@ -96,12 +96,18 @@ body {
   color: white;
 }
 .songsWrapper {
+  opacity: 1;
   height: 375px;
   overflow-x: hidden;
   overflow-y: auto;
   text-align: justify;
   display: flex;
   flex-direction: column;
+  transition: 0.5s ease;
+}
+.songsWrapper.removed {
+  opacity: 0;
+  transition: 0.5s ease;
 }
 .songsWrapper li {
   height: 35px;

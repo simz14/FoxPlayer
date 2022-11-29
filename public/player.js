@@ -6,7 +6,7 @@ const main = async () => {
       res([
         {
           id: 1,
-          playlist_id: 2,
+          playlist_id: 3,
           title: "Spirirt Blossom",
           artist: "RomanBelov",
           duration: 1.48,
@@ -14,7 +14,7 @@ const main = async () => {
         },
         {
           id: 2,
-          playlist_id: 2,
+          playlist_id: 3,
           title: "WatR-Fluid",
           artist: "ItsWatR",
           duration: 2.13,
@@ -22,19 +22,91 @@ const main = async () => {
         },
         {
           id: 3,
-          playlist_id: 2,
-          title: "Chillmore",
-          artist: "The Weekend",
+          playlist_id: 3,
+          title: "The Weekend ",
+          artist: "Chillmore",
           duration: 2.25,
           path: "music/the-weekend-117427.mp3",
         },
         {
           id: 4,
-          playlist_id: 2,
+          playlist_id: 3,
           title: "Sunset Vibes",
           artist: "Undefined",
           duration: 2.28,
           path: "music/sunset-vibes-lo-fichillhop-9503.mp3",
+        },
+        {
+          id: 5,
+          playlist_id: 3,
+          title: "bathroom-chill",
+          artist: "Chillmore",
+          duration: 4.0,
+          path: "music/bathroom-chill-background-music-14977.mp3",
+        },
+        {
+          id: 6,
+          playlist_id: 3,
+          title: "The Weekend ",
+          artist: "Chillmore",
+          duration: 2.25,
+          path: "music/the-weekend-117427.mp3",
+        },
+        {
+          id: 7,
+          playlist_id: 3,
+          title: "Spirirt Blossom",
+          artist: "RomanBelov",
+          duration: 1.48,
+          path: "music/spirit-blossom-15285.mp3",
+        },
+        {
+          id: 8,
+          playlist_id: 3,
+          title: "Sunset Vibes",
+          artist: "Undefined",
+          duration: 2.28,
+          path: "music/sunset-vibes-lo-fichillhop-9503.mp3",
+        },
+        {
+          id: 9,
+          playlist_id: 3,
+          title: "Sunset Vibes",
+          artist: "Undefined",
+          duration: 2.28,
+          path: "music/sunset-vibes-lo-fichillhop-9503.mp3",
+        },
+        {
+          id: 10,
+          playlist_id: 3,
+          title: "bathroom-chill",
+          artist: "Chillmore",
+          duration: 4.0,
+          path: "music/bathroom-chill-background-music-14977.mp3",
+        },
+        {
+          id: 11,
+          playlist_id: 3,
+          title: "The Weekend ",
+          artist: "Chillmore",
+          duration: 2.25,
+          path: "music/the-weekend-117427.mp3",
+        },
+        {
+          id: 12,
+          playlist_id: 4,
+          title: "Sweet love",
+          artist: "Day Fox",
+          duration: 3.13,
+          path: "music/sweet-love-121561.mp3",
+        },
+        {
+          id: 13,
+          playlist_id: 4,
+          title: "Goat",
+          artist: "Prazkhanal",
+          duration: 2.18,
+          path: "music/goat-20930.mp3",
         },
       ]);
       rej("Database error");
@@ -60,6 +132,11 @@ const main = async () => {
           playlist: "Lofi",
           system_rank: 0,
         },
+        {
+          id: 4,
+          playlist: "Upbeat",
+          system_rank: 0,
+        },
       ]);
       rej("Database error");
     });
@@ -70,7 +147,17 @@ const main = async () => {
     .then((res) => res)
     .catch((err) => err);
 
-  //CREATING HTML FOR SONGS LIST
+  ///////////////////CHANGING TITLE OF CURRENT SONG PLAYING
+  const currentSong = (title, author) => {
+    const titleElement = document.querySelector(".currentSongTitle");
+    titleElement.innerText = title;
+
+    const authorElement = document.querySelector(".currentSongAuthor");
+    authorElement.innerText = author;
+  };
+  toPlay.src = data[0].path;
+  currentSong(data[0].title, data[0].artist);
+  ///////////////////////////////CREATING HTML FOR SONGS LIST
   const songsWrapper = document.querySelector(".songsWrapper");
   const createASong = (title, path, duration) => {
     const song = document.createElement("li");
@@ -90,28 +177,40 @@ const main = async () => {
     return song;
   };
 
-  //CREATING ELEMENTS SONGS BY PLAYLIST ID
+  //////////////////////CREATING ELEMENTS SONGS BY PLAYLIST ID
   const loopSongs = async (playlistId = 2) => {
-    if (songsWrapper) {
-      songsWrapper.innerHTML = "";
-    }
-    const filteredSongs = data.filter((song) => song.playlist_id == playlistId);
+    songsWrapper.innerHTML = "";
 
-    filteredSongs.forEach((song) => {
-      const songElement = createASong(song.title, song.path, song.duration);
-      console.log("After create");
-
-      //CREATING SONG PLAYING FUNCTIONALITY
-      songElement.addEventListener("click", (e) => {
-        e.preventDefault();
-        toPlay.src = songElement.dataset.path;
+    if (playlistId !== 2) {
+      const filteredSongs = data.filter(
+        (song) => song.playlist_id == playlistId
+      );
+      filteredSongs.forEach((song) => {
+        const songElement = createASong(song.title, song.path, song.duration);
+        //CREATING SONG PLAYING FUNCTIONALITY
+        songElement.addEventListener("click", (e) => {
+          e.preventDefault();
+          currentSong(song.title, song.artist);
+          toPlay.src = songElement.dataset.path;
+        });
       });
-    });
+    }
+    if (playlistId == 2) {
+      data.forEach((song) => {
+        const songElement = createASong(song.title, song.path, song.duration);
+        //CREATING SONG PLAYING FUNCTIONALITY
+        songElement.addEventListener("click", (e) => {
+          e.preventDefault();
+          currentSong(song.title, song.artist);
+          toPlay.src = songElement.dataset.path;
+        });
+      });
+    }
   };
 
   loopSongs();
 
-  //CREATING HTML FOR PLAYLISTS
+  /////////////////////////////////////CREATING HTML FOR PLAYLISTS
   const playlistsWrapper = document.querySelector(".allPlaylists");
   const createAPlaylist = (title, id) => {
     const playlist = document.createElement("li");
@@ -132,7 +231,6 @@ const main = async () => {
       playlistElement.addEventListener("click", (e) => {
         e.preventDefault();
         loopSongs(playlistElement.dataset.id);
-        console.log(playlistElement.dataset.id);
       });
     });
   };
