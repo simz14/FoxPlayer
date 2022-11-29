@@ -1,6 +1,7 @@
 "use strict";
 const main = async () => {
-  const toPlay = document.querySelector("audio");
+  const playButton = document.getElementById("play");
+  const media = document.querySelector("audio");
   const fakeSongsFetch = () => {
     const fakePromise = new Promise((res, rej) => {
       res([
@@ -155,7 +156,7 @@ const main = async () => {
     const authorElement = document.querySelector(".currentSongAuthor");
     authorElement.innerText = author;
   };
-  toPlay.src = data[0].path;
+  media.src = data[0].path;
   currentSong(data[0].title, data[0].artist);
   ///////////////////////////////CREATING HTML FOR SONGS LIST
   const songsWrapper = document.querySelector(".songsWrapper");
@@ -191,7 +192,8 @@ const main = async () => {
         songElement.addEventListener("click", (e) => {
           e.preventDefault();
           currentSong(song.title, song.artist);
-          toPlay.src = songElement.dataset.path;
+          media.src = songElement.dataset.path;
+          playButton.classList.remove("active");
         });
       });
     }
@@ -202,7 +204,8 @@ const main = async () => {
         songElement.addEventListener("click", (e) => {
           e.preventDefault();
           currentSong(song.title, song.artist);
-          toPlay.src = songElement.dataset.path;
+          media.src = songElement.dataset.path;
+          playButton.classList.remove("active");
         });
       });
     }
@@ -237,8 +240,6 @@ const main = async () => {
   getPlaylistHandler();
 
   //loadstart, play, ended, progress
-  const playButton = document.getElementById("play");
-  const media = document.querySelector("audio");
   playButton.addEventListener("click", function () {
     if (!media.paused) {
       media.pause();
