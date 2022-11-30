@@ -208,6 +208,15 @@ const main = async () => {
     document.querySelector("#modalAddPlaylist").style.display = "none";
   });
 
+  ////////////////////INPUT BACK BUTTON
+  const backBtns = document.querySelectorAll(".back");
+  backBtns.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      document.querySelector("#modalAddTrack").style.display = "none";
+      document.querySelector("#modalAddPlaylist").style.display = "none";
+    });
+  });
+
   //loadstart, play, ended, progress
   playButton.addEventListener("click", function () {
     if (!media.paused) {
