@@ -14,6 +14,7 @@
         <label for="pname">Playlist name</label>
         <input type="text" id="pname" name="pname" />
         <button type="submit" id="addPlaylistBtn">Add</button>
+        <button class="back">Back</button>
       </div>
     </div>
     <div class="container">
@@ -31,8 +32,11 @@
           </div>
         </div>
         <div id="selectSong">
-          <h3 class="currentSongTitle">Title</h3>
-          <p class="currentSongAuthor">Author</p>
+          <div class="currentSongWrapper">
+            <h3 class="currentSongTitle">Title</h3>
+            <p class="currentSongAuthor">Author</p>
+            <div class="controlButtonsAdd"></div>
+          </div>
           <div class="songsWrapper"></div>
         </div>
         <div id="currentlyPlaying">

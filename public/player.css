@@ -81,6 +81,34 @@ body {
   height: 15px;
   width: 15px;
 }
+.addToPlaylist{
+  content: url("images/add-symbol-svgrepo-com.svg");
+  height: 15px;
+  width: 15px;
+}
+.addToFavourites{
+  content: url("images/add-to-favourites.svg");
+  height: 15px;
+  width: 15px;
+}
+.controlButtonsAdd{
+  grid-column: 2/3;
+  justify-self: end;
+  display: flex;
+  align-self: center;
+  gap: 10px;
+
+}
+.currentSongWrapper{
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+}
+.currentSongTitle{
+  grid-column: 1/4;
+}
+.currentSongAuthor{
+  grid-column: 1/2;
+}
 .playlistsSide {
   display: grid;
   grid-column: 1/3;

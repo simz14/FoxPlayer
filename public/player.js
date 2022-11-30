@@ -158,6 +158,15 @@ const main = async () => {
   };
   media.src = data[0].path;
   currentSong(data[0].title, data[0].artist);
+  ///////////////////////////ADD SONG TO PLAYLIST BUTTON
+  document.querySelector(".controlButtonsAdd").innerHTML +=
+    "<a class=addToPlaylist href=#></a>";
+  document.querySelector(".controlButtonsAdd").innerHTML +=
+    "<a class=addToFavourites href=#></a>";
+  const addTrackToPlaylistBtn = document.querySelector(".addToPlaylist");
+  addTrackToPlaylistBtn.addEventListener("click", (e) => {});
+  const addTrackToFavBtn = document.querySelector(".addToFavourites");
+  addTrackToFavBtn.addEventListener("click", (e) => {});
 
   ///////////////////////////////CREATING HTML FOR SONGS LIST
   const songsWrapper = document.querySelector(".songsWrapper");
@@ -262,12 +271,12 @@ const main = async () => {
   });
 
   ///////////////////////GET INPUT TO CREATE PLAYLIST
-
   const submitPlaylistBtn = document.querySelector("#addPlaylistBtn");
   submitPlaylistBtn.addEventListener("click", (e) => {
     console.log(document.getElementById("pname").value);
     document.querySelector("#modalAddPlaylist").style.display = "none";
   });
+
   //loadstart, play, ended, progress
   playButton.addEventListener("click", function () {
     if (!media.paused) {
