@@ -89,6 +89,26 @@ app.post("/playlists", (req, res) => {
   apiHandler();
 });
 
+app.delete("/playlists/:id", (req, res) => {
+  const id = req.params.id;
+  const deletePromise = new Promise((res, rej) => {
+    conn.query(`DELETE FROM playlists WHERE id=${id}`, (err) => {
+      if (err) {
+        rej({ error: "ERROR with deleting playlist" });
+      }
+      res("Deleted");
+    });
+  });
+  const apiHandler = async () => {
+    const deleteResponse = await deletePromise
+      .then((res) => res)
+      .catch((err) => err);
+
+    res.send(deleteResponse);
+  };
+  apiHandler();
+});
+
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
 });

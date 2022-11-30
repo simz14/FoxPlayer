@@ -26,6 +26,13 @@ const main = async () => {
     createAPlaylist(playlistName, response.id, 0);
   };
 
+  //////////FETCH playlists -----DELETE
+  const deletePlaylist = async (playlistId) => {
+    await fetch(`playlists/${playlistId}`, {
+      method: "DELETE",
+    });
+  };
+
   ///////////////////CHANGING TITLE OF CURRENT SONG PLAYING
   const currentSong = (title, author) => {
     const titleElement = document.querySelector(".currentSongTitle");
@@ -52,7 +59,7 @@ const main = async () => {
   const createASong = (title, path, duration) => {
     const song = document.createElement("li");
     song.className = "song";
-    song.setAttribute("tracks-path", path);
+    song.setAttribute("data-path", path);
 
     const songTitle = document.createElement("div");
     songTitle.className = "songTitle";
@@ -80,7 +87,7 @@ const main = async () => {
         songElement.addEventListener("click", (e) => {
           e.preventDefault();
           currentSong(song.title, song.artist);
-          media.src = songElement.tracksset.path;
+          media.src = songElement.dataset.path;
           playButton.classList.remove("active");
         });
       });
@@ -92,7 +99,7 @@ const main = async () => {
         songElement.addEventListener("click", (e) => {
           e.preventDefault();
           currentSong(song.title, song.artist);
-          media.src = songElement.tracksset.path;
+          media.src = songElement.dataset.path;
           playButton.classList.remove("active");
         });
       });
@@ -116,7 +123,11 @@ const main = async () => {
       removeTrack.className = "removeIcon";
       playlist.appendChild(removeTrack);
       removeTrack.addEventListener("click", (e) => {
-        console.log(removeTrack.parentElement.dataset.id);
+        if (confirm("Are you sere?") == true) {
+          const id = removeTrack.parentElement.dataset.id;
+          deletePlaylist(id);
+          playlist.remove();
+        }
       });
     }
     return playlist;
