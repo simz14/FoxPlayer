@@ -33,16 +33,13 @@ const main = async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title: title,
-        artits: artist,
+        artist: artist,
         duration: duration,
         path: path,
       }),
     })
       .then((res) => res.json())
-
       .catch((err) => err);
-
-    console.log(response);
   };
 
   //////////FETCH playlists -----DELETE
@@ -75,13 +72,31 @@ const main = async () => {
     const tracksId = document.querySelector(".currentSongTitle").dataset.id;
     tracks.forEach((track) => {
       if (track.id == tracksId) {
-        postTrack(4, track.title, track.artist, track.duration, track.path);
+        document.querySelector("#modalAddTrack").style.display = "flex";
+        const addTrackBtn = document.querySelector("#addTrackBtn");
+        addTrackBtn.addEventListener("click", (e) => {
+          const input = document.querySelector("#pid").value;
+          postTrack(
+            input,
+            track.title,
+            track.artist,
+            track.duration,
+            track.path
+          );
+        });
       }
     });
   });
 
   const addTrackToFavBtn = document.querySelector(".addToFavourites");
-  addTrackToFavBtn.addEventListener("click", (e) => {});
+  addTrackToFavBtn.addEventListener("click", (e) => {
+    const tracksId = document.querySelector(".currentSongTitle").dataset.id;
+    tracks.forEach((track) => {
+      if (track.id == tracksId) {
+        postTrack(1, track.title, track.artist, track.duration, track.path);
+      }
+    });
+  });
 
   ///////////////////////////////CREATING HTML FOR SONGS LIST
   const songsWrapper = document.querySelector(".songsWrapper");
