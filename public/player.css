@@ -161,7 +161,6 @@ body {
 .allPlaylists li {
   height: 35px;
   background-color: rgba(167, 225, 154, 0.225);
-  border: 0.5px solid rgba(207, 232, 215, 0.637);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -170,6 +169,7 @@ body {
   cursor: pointer;
   transition: 0.3s;
   font-size: 16px;
+  margin: 5px;
 }
 .allPlaylists li:hover {
   background-color: rgba(167, 225, 154, 0.644);
@@ -222,13 +222,13 @@ body {
 }
 #selectSong li {
   background-color: rgba(167, 225, 154, 0.225);
-  border: 0.5px solid rgba(207, 232, 215, 0.637);
   border-radius: 10px;
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: 0.3s;
   font-size: 16px;
+  margin: 5px;
 }
 #selectSong li:hover {
   background-color: rgba(167, 225, 154, 0.644);
