@@ -96,12 +96,12 @@ app.post("/playlist-tracks/:playlist_id", (req, res) => {
   const path = req.body.path;
   const addToPlaylistPromise = new Promise((res, rej) => {
     conn.query(
-      `INSERT INTO tracks(playlist_id,title,artist,duration,path) VALUES("${title}","${artist}",${duration},"${path}",)`,
+      `INSERT INTO tracks(playlist_id,title,artist,duration,path) VALUES(${id},"${title}","${artist}",${duration},"${path}")`,
       (err) => {
         if (err) {
-          rej("ERROR with adding to playlist");
+          rej({ error: "ERROR with adding to playlist" });
         }
-        res("Added");
+        res({ status: "Added" });
       }
     );
   });

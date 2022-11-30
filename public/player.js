@@ -39,7 +39,10 @@ const main = async () => {
       }),
     })
       .then((res) => res.json())
+
       .catch((err) => err);
+
+    console.log(response);
   };
 
   //////////FETCH playlists -----DELETE
@@ -50,23 +53,33 @@ const main = async () => {
   };
 
   ///////////////////CHANGING TITLE OF CURRENT SONG PLAYING
-  const currentSong = (title, author) => {
+  const currentSong = (title, author, id) => {
     const titleElement = document.querySelector(".currentSongTitle");
     titleElement.innerText = title;
+    titleElement.setAttribute("data-id", id);
 
     const authorElement = document.querySelector(".currentSongAuthor");
     authorElement.innerText = author;
   };
   media.src = tracks[0].path;
-  currentSong(tracks[0].title, tracks[0].artist);
+  currentSong(tracks[0].title, tracks[0].artist, tracks[0].id);
 
   ///////////////////////////ADD SONG TO PLAYLIST BUTTON
   document.querySelector(".controlButtonsAdd").innerHTML +=
     "<a class=addToPlaylist href=#></a>";
   document.querySelector(".controlButtonsAdd").innerHTML +=
     "<a class=addToFavourites href=#></a>";
+
   const addTrackToPlaylistBtn = document.querySelector(".addToPlaylist");
-  addTrackToPlaylistBtn.addEventListener("click", (e) => {});
+  addTrackToPlaylistBtn.addEventListener("click", (e) => {
+    const tracksId = document.querySelector(".currentSongTitle").dataset.id;
+    tracks.forEach((track) => {
+      if (track.id == tracksId) {
+        postTrack(4, track.title, track.artist, track.duration, track.path);
+      }
+    });
+  });
+
   const addTrackToFavBtn = document.querySelector(".addToFavourites");
   addTrackToFavBtn.addEventListener("click", (e) => {});
 
@@ -102,7 +115,7 @@ const main = async () => {
         //CREATING SONG PLAYING FUNCTIONALITY
         songElement.addEventListener("click", (e) => {
           e.preventDefault();
-          currentSong(song.title, song.artist);
+          currentSong(song.title, song.artist, song.id);
           media.src = songElement.dataset.path;
           playButton.classList.remove("active");
         });
@@ -114,7 +127,7 @@ const main = async () => {
         //CREATING SONG PLAYING FUNCTIONALITY
         songElement.addEventListener("click", (e) => {
           e.preventDefault();
-          currentSong(song.title, song.artist);
+          currentSong(song.title, song.artist, song.id);
           media.src = songElement.dataset.path;
           playButton.classList.remove("active");
         });
@@ -139,7 +152,7 @@ const main = async () => {
       removeTrack.className = "removeIcon";
       playlist.appendChild(removeTrack);
       removeTrack.addEventListener("click", (e) => {
-        if (confirm("Are you sere?") == true) {
+        if (confirm("Are you sure?") == true) {
           const id = removeTrack.parentElement.dataset.id;
           deletePlaylist(id);
           playlist.remove();
@@ -159,7 +172,6 @@ const main = async () => {
       playlistElement.addEventListener("click", (e) => {
         e.preventDefault();
         loopSongs(playlistElement.dataset.id);
-        console.log(playlistElement.dataset.id);
       });
     });
   };
