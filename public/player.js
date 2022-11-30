@@ -26,6 +26,22 @@ const main = async () => {
     createAPlaylist(playlistName, response.id, 0);
   };
 
+  ///////////FETCH tracks ----- POST
+  const postTrack = async (playlistId, title, artist, duration, path) => {
+    const response = await fetch(`/playlist-tracks/${playlistId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: title,
+        artits: artist,
+        duration: duration,
+        path: path,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((err) => err);
+  };
+
   //////////FETCH playlists -----DELETE
   const deletePlaylist = async (playlistId) => {
     await fetch(`playlists/${playlistId}`, {

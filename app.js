@@ -78,13 +78,39 @@ app.post("/playlists", (req, res) => {
       }
     );
   });
-
   const apiHandler = async () => {
     const insertResponse = await postPromise
       .then((res) => res)
       .catch((err) => err);
 
     res.send(...insertResponse);
+  };
+  apiHandler();
+});
+
+app.post("/playlist-tracks/:playlist_id", (req, res) => {
+  const id = req.params.playlist_id;
+  const title = req.body.title;
+  const artist = req.body.artist;
+  const duration = req.body.duration;
+  const path = req.body.path;
+  const addToPlaylistPromise = new Promise((res, rej) => {
+    conn.query(
+      `INSERT INTO tracks(playlist_id,title,artist,duration,path) VALUES("${title}","${artist}",${duration},"${path}",)`,
+      (err) => {
+        if (err) {
+          rej("ERROR with adding to playlist");
+        }
+        res("Added");
+      }
+    );
+  });
+  const apiHandler = async () => {
+    const addResponse = await addToPlaylistPromise
+      .then((res) => res)
+      .catch((err) => err);
+
+    res.send(addResponse);
   };
   apiHandler();
 });
