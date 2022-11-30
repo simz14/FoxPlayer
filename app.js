@@ -26,18 +26,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/player.html"));
 });
 
-/*app.get("/playlist-tracks/:playlist_id", (req, res) => {
-  const playlist_id = req.params.playlist_id;
+app.get("/playlist-tracks", (req, res) => {
   const tracksPromise = new Promise((res, rej) => {
-    conn.query(
-      `SELECT * FROM tracks WHERE playlist_id=${playlist_id}`,
-      (err, rows) => {
-        if (err) {
-          rej({ error: "Database error" });
-        }
-        res(rows);
+    conn.query(`SELECT * FROM tracks`, (err, rows) => {
+      if (err) {
+        rej({ error: "Error with database" });
       }
-    );
+      res(rows);
+    });
   });
 
   const apiHandler = async () => {
@@ -45,7 +41,23 @@ app.get("/", (req, res) => {
     res.send(response);
   };
   apiHandler();
-});*/
+});
+app.get("/playlist", (req, res) => {
+  const tracksPromise = new Promise((res, rej) => {
+    conn.query(`SELECT * FROM playlists`, (err, rows) => {
+      if (err) {
+        rej({ error: "Error with database" });
+      }
+      res(rows);
+    });
+  });
+
+  const apiHandler = async () => {
+    const response = await tracksPromise.then((res) => res).catch((err) => err);
+    res.send(response);
+  };
+  apiHandler();
+});
 
 app.listen(port, () => {
   console.log(`The server is up and running on ${port}`);
