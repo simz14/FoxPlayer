@@ -21,7 +21,6 @@ conn.connect((err) => {
   console.log("Connection established");
 });
 //---------------------------------------------------
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/player.html"));
 });
@@ -35,13 +34,13 @@ app.get("/playlist-tracks", (req, res) => {
       res(rows);
     });
   });
-
   const apiHandler = async () => {
     const response = await tracksPromise.then((res) => res).catch((err) => err);
     res.send(response);
   };
   apiHandler();
 });
+
 app.get("/playlist", (req, res) => {
   const tracksPromise = new Promise((res, rej) => {
     conn.query(`SELECT * FROM playlists`, (err, rows) => {
@@ -51,10 +50,41 @@ app.get("/playlist", (req, res) => {
       res(rows);
     });
   });
-
   const apiHandler = async () => {
     const response = await tracksPromise.then((res) => res).catch((err) => err);
     res.send(response);
+  };
+  apiHandler();
+});
+
+app.post("/playlists", (req, res) => {
+  const playlistName = req.body.playlistName;
+  const postPromise = new Promise((res, rej) => {
+    conn.query(
+      `INSERT INTO playlists(playlist,system_rank) VALUES("${playlistName}",0)`,
+      (err, rows) => {
+        if (err) {
+          rej("Error with inserting");
+        }
+        conn.query(
+          `SELECT id FROM playlists WHERE playlist="${playlistName}"`,
+          (err, rows) => {
+            if (err) {
+              rej("Error with selecting");
+            }
+            res(rows);
+          }
+        );
+      }
+    );
+  });
+
+  const apiHandler = async () => {
+    const insertResponse = await postPromise
+      .then((res) => res)
+      .catch((err) => err);
+
+    res.send(...insertResponse);
   };
   apiHandler();
 });

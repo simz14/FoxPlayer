@@ -13,6 +13,19 @@ const main = async () => {
     .then((res) => res.json())
     .catch((err) => err);
 
+  ///////////FETCH playlists ----- POST
+  const postPlaylist = async (playlistName) => {
+    const response = await fetch("/playlists", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ playlistName: playlistName }),
+    })
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    createAPlaylist(playlistName, response.id, 0);
+  };
+
   ///////////////////CHANGING TITLE OF CURRENT SONG PLAYING
   const currentSong = (title, author) => {
     const titleElement = document.querySelector(".currentSongTitle");
@@ -57,7 +70,6 @@ const main = async () => {
   //////////////////////CREATING ELEMENTS SONGS BY PLAYLIST ID
   const loopSongs = async (playlistId = 2) => {
     songsWrapper.innerHTML = "";
-
     if (playlistId !== 2) {
       const filteredSongs = tracks.filter(
         (song) => song.playlist_id == playlistId
@@ -94,7 +106,7 @@ const main = async () => {
     const playlist = document.createElement("li");
     playlist.innerText = title;
     playlist.className = "playlist";
-    playlist.setAttribute("tracks-id", id);
+    playlist.setAttribute("data-id", id);
     playlistsWrapper.appendChild(playlist);
 
     /////////////////DELETE PLAYLIST FUNCTIONALITY
@@ -104,7 +116,7 @@ const main = async () => {
       removeTrack.className = "removeIcon";
       playlist.appendChild(removeTrack);
       removeTrack.addEventListener("click", (e) => {
-        console.log(removeTrack.parentElement.tracksset.id);
+        console.log(removeTrack.parentElement.dataset.id);
       });
     }
     return playlist;
@@ -119,7 +131,8 @@ const main = async () => {
       );
       playlistElement.addEventListener("click", (e) => {
         e.preventDefault();
-        loopSongs(playlistElement.tracksset.id);
+        loopSongs(playlistElement.dataset.id);
+        console.log(playlistElement.dataset.id);
       });
     });
   };
@@ -135,7 +148,9 @@ const main = async () => {
   ///////////////////////GET INPUT TO CREATE PLAYLIST
   const submitPlaylistBtn = document.querySelector("#addPlaylistBtn");
   submitPlaylistBtn.addEventListener("click", (e) => {
-    console.log(document.getElementById("pname").value);
+    const playName = document.getElementById("pname").value;
+
+    postPlaylist(playName);
     document.querySelector("#modalAddPlaylist").style.display = "none";
   });
 
